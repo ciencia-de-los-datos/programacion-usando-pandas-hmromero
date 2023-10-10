@@ -172,16 +172,17 @@ def pregunta_10():
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
     newtbl0=tbl0[["_c1"]].drop_duplicates(subset="_c1",ignore_index=True)
-    newtbl0=newtbl0.rename(columns={"_c1": "_c0"})
-    newtbl0=newtbl0.assign(_c1="")
-    newtbl0=newtbl0.sort_values(by="_c0",ignore_index=True)
+    newtbl0=newtbl0.assign(_c2="")
+    newtbl0=newtbl0.sort_values(by="_c1",ignore_index=True)
     tblNew=pd.DataFrame()
     lst=[]
     for i in range(0, len(newtbl0)):
-        tblNew=tbl0[tbl0["_c1"]==newtbl0.iloc[i]["_c0"]]
+        tblNew=tbl0[tbl0["_c1"]==newtbl0.iloc[i]["_c1"]]
         lst=sorted(tblNew["_c2"].tolist())
         c2=":".join(map(str, lst))
-        newtbl0.loc[i,"_c1"]=c2
+        newtbl0.loc[i,"_c2"]=c2
+
+    newtbl0.set_index("_c1", inplace=True)
 
     
     return newtbl0
